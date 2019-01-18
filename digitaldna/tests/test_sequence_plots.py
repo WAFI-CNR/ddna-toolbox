@@ -8,7 +8,7 @@ def test_compute_entropy():
          list('123456789'), list('00000000000000'),
          list('123456789gsadfvop8u4w3hji0as7drfpiw3o4htfya’0sdfgphi0arepgiaudfgt’8piuhagv')]
     entropies = [1.54198, 2.81520, .0, 3.16993, .0, 4.58138]
-    assert_array_almost_equal(entropies, SequencePlots().compute_entropy_(X), 5, 'Entropy of X is wrong')
+    assert_array_almost_equal(entropies, SequencePlots()._compute_entropy(X), 5, 'Entropy of X is wrong')
 
 
 def test_string_arr_to_int_matrix_():
@@ -17,10 +17,10 @@ def test_string_arr_to_int_matrix_():
                [65, 65, 65, 66, 66, 66, 66, 0],
                [67, 68, 65, 67, 67, 66, 66, 65],
                [67, 68, 65, 67, 67, 66, 66, 0]]
-    assert_equal(SequencePlots().string_arr_to_int_matrix_(X), X_ascii)
+    assert_equal(SequencePlots()._string_arr_to_int_matrix(X), X_ascii)
 
 
 def test_find_alphabet_():
     X = ['aabbcder', 'saefs']
     alphabet = list('abcdefrs')
-    assert_array_equal(np.sort(SequencePlots().find_alphabet_(X)), np.sort(alphabet))
+    assert_array_equal(np.sort(SequencePlots()._find_alphabet(X)), np.sort(alphabet))

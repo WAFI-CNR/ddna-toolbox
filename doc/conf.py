@@ -29,7 +29,7 @@ else:
 sphinx_gallery_conf = {
     'examples_dirs' : '../examples',
     'gallery_dirs'  : 'auto_examples'}
-templates_path = ['_templates']
+templates_path = ['templates']
 source_suffix = '.rst'
 autodoc_default_flags = ['members', 'inherited-members']
 autosummary_generate = True
@@ -37,16 +37,15 @@ plot_gallery = 'True'
 master_doc = 'index'
 project = u'digitaldna'
 copyright = u'2018, Giuseppe Gagliano'
-version = '0.1'
-release = '0.1.0'
+version = '0.0.5'
 exclude_patterns = ['_build', '_templates']
 show_authors = True
 pygments_style = 'sphinx'
 html_theme = 'sphinx_rtd_theme'
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_title = 'Digital DNA'
-html_logo = '_static/images/ddna_wide.png'
-html_favicon = '_static/images/ddna_wide.png'
+html_logo = 'logos/ddna_wide.png'
+html_favicon = 'logos/ddna_wide.png'
 html_static_path = ['_static']
 html_last_updated_fmt = '%b %d, %Y'
 html_show_sourcelink = False

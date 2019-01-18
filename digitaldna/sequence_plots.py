@@ -16,7 +16,7 @@ class SequencePlots():
         Parameters
         ----------
         alphabet : string, optional
-            The sequences' alphabet, used to show prettier labels, possible values are:
+            The sequences' alphabet, used to show prettier labels, possible values are:\n
             - 'b3_type'
             - 'b3_content'
             - 'b6_content'
@@ -42,17 +42,19 @@ class SequencePlots():
     def plot_alphabet_distribution(self, X):
         """ This function produces a box plot where each box represents the distribution of a letter
             in the sequences. The alphabet is inferred from the sequences.
+            
             Parameters
             ----------
             X : array-like, shape (n_samples, 1), mandatory
                 The input sequences of digital dna
+                
             Returns
             -------
             y : an instance of self
             """
         check_array(X, ensure_2d=False, dtype=np.unicode_)
         length = len(X)
-        freq = pd.DataFrame(index=range(length), columns=self.find_alphabet_(X))
+        freq = pd.DataFrame(index=range(length), columns=self._find_alphabet(X))
         for i in range(length):
             freq.at[i] = dict(Counter(X[i]))
         freq = freq.dropna(axis='columns', how='all').fillna(0).astype(int)
@@ -63,17 +65,19 @@ class SequencePlots():
     def plot_sequences_color(self, X):
         """ This function produces a matrix image where each row is a digital dna sequence and each
             letter is represented by a different color.
+            
             Parameters
             ----------
             X : array-like, shape (n_samples, 1), mandatory
                 The input sequences of digital dna
+                
             Returns
             -------
             y : an instance of self
             """
         check_array(X, ensure_2d=False, dtype=np.unicode_)
         X = np.array(sorted(X, key=len, reverse=True))
-        matrix = self.string_arr_to_int_matrix_(X)
+        matrix = self._string_arr_to_int_matrix(X)
         remap = dict((k, i) for i, k in enumerate(np.unique(matrix)))
         cmap = ListedColormap(
             [plt.get_cmap("tab10")(i) if i > 0 or len(remap) == 1 else 'white' for i in remap.values()])
@@ -90,17 +94,19 @@ class SequencePlots():
 
     def plot_intrasequence_entropy(self, X):
         """ This function produces a box plot with a single box representing the distribution of
-            the intra-sequence entropies (the Shannon Entropy computed over a single digital gna sequence).
+            the intra-sequence entropies (the Shannon Entropy computed over a single digital dna sequence).
+            
             Parameters
             ----------
             X : array-like, shape (n_samples, 1), mandatory
                 The input sequences of digital dna
+                
             Returns
             -------
             y : an instance of self
             """
         check_array(X, ensure_2d=False, dtype=np.unicode_)
-        entropy = self.compute_entropy_(X)
+        entropy = self._compute_entropy(X)
         ax = sns.boxplot(data=entropy, color="white")
         ax = sns.swarmplot(data=entropy, color="red")
         ax.set_ylabel("Intraseq Shannon Entropy")
@@ -113,16 +119,18 @@ class SequencePlots():
         """ This function produces a composite plot. On the left a boxplot representing the distribution
             of the inter-sequence entropy (Shannon's Entropy of the letters in the same with same sequence
             index but in different sequences). On the right a scatterplot of the entropies ordered by sequence index.
+            
             Parameters
             ----------
             X : array-like, shape (n_samples, 1), mandatory
                 The input sequences of digital dna
+                
             Returns
             -------
             y : an instance of self
             """
         check_array(X, ensure_2d=False, dtype=np.unicode_)
-        entropy = self.compute_entropy_(self.string_arr_to_int_matrix_(X).T)
+        entropy = self._compute_entropy(self._string_arr_to_int_matrix(X).T)
         f, axes = plt.subplots(1, 2, gridspec_kw={'width_ratios': [1, 3]})
         unique = np.unique(entropy)
         ax = sns.boxplot(data=unique, color="white", ax=axes[0])
@@ -134,7 +142,7 @@ class SequencePlots():
         plt.subplots_adjust(wspace=.5)
         return self
 
-    def compute_entropy_(self, X):
+    def _compute_entropy(self, X):
         arr_size = len(X)
         entropies = np.zeros((arr_size, 1), dtype=np.float32)
         for i in range(arr_size):
@@ -146,7 +154,7 @@ class SequencePlots():
             entropies[i] = -sum(prob_list * np.log2(prob_list))
         return entropies.flatten()
 
-    def string_arr_to_int_matrix_(self, X):
+    def _string_arr_to_int_matrix(self, X):
         rowsize = len(X)
         colsize = len(max(X, key=len))
         matrix = np.zeros((rowsize, colsize), dtype=np.int8)
@@ -157,6 +165,6 @@ class SequencePlots():
                 matrix[i, j] = ord(s[j])
         return matrix
 
-    def find_alphabet_(self, X):
+    def _find_alphabet(self, X):
         letters = [list(set(s)) for s in X]
         return list(set(item for sublist in letters for item in sublist))
