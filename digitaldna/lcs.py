@@ -27,10 +27,15 @@ class LongestCommonSubsequence(BaseEstimator):
 
     out_path : str, optional
         The output file name with absolute path of the file where the algorithm will save result in case of
-        verbosity equals to Verbosity.FILE or Verbosity.FILE_EXTENDED
+        verbosity equals to `Verbosity.FILE` or `Verbosity.FILE_EXTENDED`.
         Default: '/tmp/glcr_cache'
 
     overwrite : boolean, optional
+        It must be False to use the LCS files produced in a previous fit call, in this case the file names are
+        the ones specified in the out_path parameter. If True, recomputes the LCS files.
+        Default: False
+
+    threshold : boolean, optional
         It must be False to use the LCS files produced in a previous fit call, in this case the file names are
         the ones specified in the out_path parameter. If True, recomputes the LCS files.
         Default: False
@@ -39,23 +44,18 @@ class LongestCommonSubsequence(BaseEstimator):
         The size of the window used to compute the cutting threshold between bot and not bot. The cutting point is
         computed by smoothing the curve, deriving the result and taking the first (l.h.s.) local maxima. The window
         parameter influences both smoothing and finding the local maxima.
-        It must be 0 < window < n_accounts. If
-        - window >= 1 , window is the number of elements
-        - 0 < window < 1, window is the percentage of the number of elements
+        It must be 2 < window < n_accounts.
         Default: 10
 
     verbosity : str, optional
-        The verbosity parameter is used to specify whether to save results to files or not. It must be:
+        The verbosity parameter is used to specify whether to save results to files or not. It must be:\n
         - TEST              does not write anything, used for benchmarking
         - MEMORY_ONLY       retrieves only the couples (sequence length, # of accounts), used for plots
-        - FILE              produces 2 files, a file named self.out_path + '.mat' where each row contains:
-                            - sequence length,
+        - FILE              produces 2 files, a file named out_path + '.gsa' where each row contains the identifier of the sequence. In the other file, named out_path + '.mat', each row contains:\n
+                            - sequence length
                             - # of accounts
-                            - range of indexes (begin and end).
-                            And a file named self.out_path + '.gsa' where each row contains the identifier of the
-                            sequence.
-        - FILE_EXTENDED     as FILE but the self.in_path + '.mat' file contains also the column of the common
-                            subsequence
+                            - range of indexes (begin and end)
+        - FILE_EXTENDED     as FILE but the in_path + '.mat' file contains also the column of the common subsequence
 
     References
     ----------
@@ -72,10 +72,11 @@ class LongestCommonSubsequence(BaseEstimator):
     M. Arnold, E. Ohlebusch, "Linear Time Algorithms for Generalizations of the Longest Common Substring Problem",
     Algorithmica, vol 60, pp. 806-818, 4 August 2011, https://link.springer.com/article/10.1007/s00453-009-9369-1
     """
-    def __init__(self, in_path='', out_path='/tmp/glcr_cache', overwrite=False, window=10, verbosity=Verbosity.FILE):
+    def __init__(self, in_path='', out_path='/tmp/glcr_cache', overwrite=False, threshold='auto', window=10, verbosity=Verbosity.FILE):
         self.in_path = in_path
         self.out_path = out_path
         self.overwrite = overwrite
+        self.threshold = threshold
         self.window = window
         if self.window < 2:
             raise ValueError('window parameter cannot be less than 2.')
@@ -123,7 +124,7 @@ class LongestCommonSubsequence(BaseEstimator):
         return self
 
     def predict(self, X=None):
-        """ (EXPERIMENTAL) Predict the labels (True bot, False Not Bot) of X according to lcs and window parameter:.
+        """ Predict the labels (True bot, False Not Bot) of X according to lcs and window parameter:.
         If X is None, returns the same as fit_predict(X_train).
         Parameters
         ----------
@@ -139,10 +140,12 @@ class LongestCommonSubsequence(BaseEstimator):
         if self.verbosity > Verbosity.MEMORY_ONLY:
             y = np.full(len(X), False)
             mat_ix = set()
-            print('finding cut...')
-            lengths = pd.read_csv(self.out_path+self.mat_, usecols=['length']).length.values
-            self.cut_ = self._decision_function(lengths)
-            del lengths
+            if self.threshold == 'auto':
+                print('finding cut...')
+                lengths = pd.read_csv(self.out_path+self.mat_, usecols=['length']).length.values
+                self.cut_ = self._decision_function(lengths)
+            else:
+                self.cut_ = self.threshold
             print('predicting...')
 
             class BreakIt(Exception):

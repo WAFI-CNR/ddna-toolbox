@@ -34,10 +34,12 @@ except ImportError:
     sys.exit(1)
 
 setup(name='digitaldna',
-      version='0.0.3',
-      description='A Python implementation of Digital DNA modelling (https://arxiv.org/pdf/1602.00110.pdf)',
-      author='Giuseppe Gagliano',
+      version='0.0.5',
+      description='A Python implementation of Digital DNA',
       packages=find_packages(),
       install_requires=INSTALL_REQUIRES,
+      url='https://github.com/WAFI-CNR/ddna-toolbox',
+      author='WAFI CNR',
       author_email='giuseppe.gagliano@iit.cnr.it',
+      license='MIT'
       )

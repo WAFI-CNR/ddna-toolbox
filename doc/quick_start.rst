@@ -10,19 +10,9 @@ DNA-Inspired Behavioral Modeling <https://ieeexplore.ieee.org/document/7876716>`
 1. Download and setup digitaldna
 --------------------------------
 
-To use digitaldna package you need to clone the ``ddna-toolbox`` repository and
-its submodule::
+To install `digitaldna`, execute::
 
-    $ git clone --recurse-submodules http://ci-repository.internal/wafi-ci/ddna-toolbox.git
-
-Before installing the module you may need to install some more dependencies. After that,
-you can install the `glcr` submodule by executing from project root::
-
-    $ pip install lcs_module/.
-
-Finally, you can install ``digitaldna`` as::
-    
-    $ pip install .
+    $ pip install digitaldna
 
 If the installation was successful, and `digitaldna` is correctly installed, you should be able
 to execute the following Python code::
@@ -60,7 +50,7 @@ The `arr` variable has shape (# of users, 2), the first column will contain the 
 
 Once you have your DDNA sequences you can launch the bot detection algorithm with these few lines of code::
 
-    from digitaldna.lcs import LongestCommonSubsequence
+    from digitaldna import LongestCommonSubsequence
 
     X = ['AAAABBAABABBB', 'AAABAABABBB', 'BAAABAABABBA', 'ABAABBBAB']
     estimator = LongestCommonSubsequence()

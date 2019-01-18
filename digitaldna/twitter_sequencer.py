@@ -17,7 +17,7 @@ URL = 'A'
 UNKNOWN = 'U'
 
 
-class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
+class TwitterDDNASequencer():
     """ Twitter Digital DNA Sequencer.
     Compute sequences of digital DNA from twitter timelines (check out
     https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline.html)
@@ -31,6 +31,7 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
         The callable should take two arrays as input and return
         one value indicating the distance between them.
         Prebuild alphabets are the following:
+
         - 'b3_type',  where the correspondence  is
                 - 'A' for tweet
                 - 'C' for reply
@@ -96,19 +97,18 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
             Returns an instance of self.
         """
         if self.alphabet == 'b3_type':
-            self.remap_ = self.tweet2char_b3_type_
+            self.remap_ = self._tweet2char_b3_type
         elif self.alphabet == 'b3_content':
-            self.remap_ = self.tweet2char_b3_content_
+            self.remap_ = self._tweet2char_b3_content
         elif self.alphabet == 'b6_content':
-            self.remap_ = self.tweet2char_b6_content_
+            self.remap_ = self._tweet2char_b6_content
         else:
             self.remap_ = None
 
         return self
 
     def transform(self, X=None):
-        """ The function that transform the array of timelines to digital dna sequences
-            given the alphabet.
+        """ The function that transform the array of timelines to digital dna sequences given the alphabet.
 
         Parameters
         ----------
@@ -122,17 +122,6 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
         X_transformed : array of string of shape = [# of users, 1]
             The array containing the digital dna sequences
             """
-        # Check is fit had been called
-        # check_is_fitted(self, ['input_shape_'])
-
-        # Input validation
-        # X = check_array(X)
-
-        # Check that the input is of the same shape as the one passed
-        # during fit.
-        # if X.shape != self.input_shape_:
-        #    raise ValueError('Shape of input is different from what was seen'
-        #                     'in `fit`')
         if self.input_file != '':
             f = open(self.input_file, "r")
             X = json.loads(f.read())
@@ -142,7 +131,7 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
         ddna_size = 0
         res = {}
         for row in X:
-            uid = self.nested_get_(row, 'user.id')
+            uid = self._nested_get(row, 'user.id')
             code = self.remap_(row)
             if uid in res:
                 res[uid] += code
@@ -170,18 +159,32 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
         X_transformed : array of shape = [n_samples, 2]
             The resulting array where the first column is the user id and the second is the translated sequence
         """
-        # Input validation
-        # X = check_array(X)
-        # self.input_shape_ = X.shape
-
-        # Check that the input is of the same shape as the one passed
-        # during fit.
-        # if X.shape != self.input_shape_:
-        #    raise ValueError('Shape of input is different from what was seen'
-        #                     'in `fit`')
         return self.fit(X, y).transform(X)
 
-    def nested_get_(self, dct, keys):
+    def get_params(self):
+        """Get parameters for this estimator.
+
+        Returns
+        -------
+        params : mapping of string to any
+            Parameter names mapped to their values.
+        """
+        return {'alphabet': self.alphabet,
+                'input_file': self.input_file}
+
+    def set_params(self, alphabet, input_file):
+        """Set the parameters of this estimator. The method works on simple estimators as well as on nested objects
+        (such as pipelines). The latter have parameters of the form ``<component>__<parameter>`` so that it's possible
+        to update each component of a nested object.
+
+        Returns
+        -------
+        self
+        """
+        self.alphabet = alphabet
+        self.input_file = input_file
+
+    def _nested_get(self, dct, keys):
         for key in keys.split('.'):
             try:
                 dct = dct[key]
@@ -189,10 +192,10 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
                 return None
         return dct
 
-    def tweet2char_b3_type_(self, tweet):
+    def _tweet2char_b3_type(self, tweet):
         reply_id = tweet['in_reply_to_user_id']
         is_reply = reply_id != 0 and reply_id is not None
-        retweet_id = self.nested_get_(tweet, 'retweeted_status.id')
+        retweet_id = self._nested_get(tweet, 'retweeted_status.id')
         is_retweet = retweet_id != 0 and retweet_id is not None
 
         if not is_reply and not is_retweet:
@@ -201,7 +204,7 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
             return REPLY
         return RETWEET
 
-    def tweet2char_b3_content_(self, tweet):
+    def _tweet2char_b3_content(self, tweet):
         # sums not empty lists within entities dict
         n_entities = sum([1 for k, v in tweet['entities'].items() if v])
 
@@ -211,7 +214,7 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
             return MIXED
         return ENTITY
 
-    def tweet2char_b6_content_(self, tweet):
+    def _tweet2char_b6_content(self, tweet):
         # sums not empty lists within entities dict
         n_entities = sum([1 for k, v in tweet['entities'].items() if v])
 
@@ -230,11 +233,3 @@ class TwitterDDNASequencer():  # BaseEstimator, TransformerMixin):
             elif 'extended_entities' in tweet:
                 return MEDIA
             return UNKNOWN
-
-    def get_params(self):
-        return {'alphabet': self.alphabet,
-                'input_file': self.input_file}
-
-    def set_params(self, alphabet, input_file):
-        self.alphabet = alphabet
-        self.input_file = input_file
