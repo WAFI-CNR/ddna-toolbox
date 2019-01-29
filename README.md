@@ -1,10 +1,9 @@
 # Digital DNA Toolbox
 
-<!--
-[![Travis Status](https://travis-ci.org/scikit-learn-contrib/project-template.svg?branch=master)](https://travis-ci.org/scikit-learn-contrib/project-template)
-[![Coveralls Status](https://coveralls.io/repos/scikit-learn-contrib/project-template/badge.svg?branch=master&service=github)](https://coveralls.io/r/scikit-learn-contrib/project-template)
-[![CircleCI Status](https://circleci.com/gh/scikit-learn-contrib/project-template.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scikit-learn-contrib/project-template/tree/master)
--->
+
+[![PyPI license](https://img.shields.io/pypi/l/digitaldna.svg)](https://pypi.python.org/pypi/digitaldna/)
+[![PyPI download month](https://img.shields.io/pypi/dm/digitaldna.svg)](https://pypi.python.org/pypi/digitaldna/)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/digitaldna.svg)](https://pypi.python.org/pypi/digitaldna/)
 
 This project was build upon the [scikit-learn template](http://contrib.scikit-learn.org/project-template/) in order to be compatible with the scikit-learn pipelines and (hyper)parameter search, while facilitating testing (including some API compliance), documentation, open source development, packaging, and continuous integration.
 
