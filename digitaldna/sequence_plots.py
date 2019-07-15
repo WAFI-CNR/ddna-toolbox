@@ -113,7 +113,7 @@ class SequencePlots():
         ax.set_yticks(np.arange(.0, 1.8, .2))
         ax.set_xticklabels([])
         ax.set_aspect(1.)
-        return self
+        return plt
 
     def plot_intersequence_entropy(self, X):
         """ This function produces a composite plot. On the left a boxplot representing the distribution
@@ -140,7 +140,7 @@ class SequencePlots():
         ax.set_xticklabels([])
         plt.plot(range(len(entropy)), entropy, '-x')
         plt.subplots_adjust(wspace=.5)
-        return self
+        return plt
 
     def _compute_entropy(self, X):
         arr_size = len(X)
