@@ -222,7 +222,6 @@ class LongestCommonSubsequence(BaseEstimator):
         if hasattr(self, 'cut_'):
             plt.plot([self.cut_, self.cut_], [0, max(self.lcs_.length)], linestyle='--')
         #plt.show()
-        print("sta cosa non funziona")
         return plt
 
     def plot_LCS_log(self):
@@ -246,7 +245,6 @@ class LongestCommonSubsequence(BaseEstimator):
         if hasattr(self, 'cut_'):
             plt.plot([self.cut_, self.cut_], [0, max(self.lcs_.length)], linestyle='--')
         # plt.show()
-        print("sta cosa non funziona")
         return plt
 
     def _decision_function(self, X):
