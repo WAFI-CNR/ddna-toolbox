@@ -221,8 +221,8 @@ class LongestCommonSubsequence(BaseEstimator):
         plt.plot(self.lcs_.num_texts, self.lcs_.length, marker='x')
         if hasattr(self, 'cut_'):
             plt.plot([self.cut_, self.cut_], [0, max(self.lcs_.length)], linestyle='--')
-        plt.show()
-        return self
+        #plt.show()
+        return plt
 
     def plot_LCS_log(self):
         """"Plots the longest common subsequence curve as (log(number of accounts), log(sequence length))
@@ -244,8 +244,8 @@ class LongestCommonSubsequence(BaseEstimator):
         plt.loglog(self.lcs_.num_texts, self.lcs_.length, marker='x')
         if hasattr(self, 'cut_'):
             plt.plot([self.cut_, self.cut_], [0, max(self.lcs_.length)], linestyle='--')
-        plt.show()
-        return self
+        # plt.show()
+        return plt
 
     def _decision_function(self, X):
         ''' Finds the first relative maximum on the smoothed LCS vector'''
