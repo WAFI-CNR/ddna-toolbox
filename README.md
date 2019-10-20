@@ -45,6 +45,7 @@ estimator.fit_predict(X)
 ```
 
 Some usage examples can be found in the documentation [website](https://wafi-cnr.github.io/ddna/stable/quick_start.html).
+You can find other examples in this [page](examples/notebook/DigitalDNA_python_package.md)
 
 ## Credits and Aknowledgement
 
