@@ -52,7 +52,6 @@ You can find other examples in this [page](examples/notebook/DigitalDNA_python_p
 
 This library has been made possible thanks to the collaboration and contribution of:
 - SAGE Publishing
-- SAGE Publishing
 - Bellomo Salvatore
 - Cresci Stefano
 - Martella Antonio

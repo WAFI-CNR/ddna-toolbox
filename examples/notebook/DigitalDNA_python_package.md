@@ -638,6 +638,7 @@ df
 
 
 ### Plot sequence distribution
+Alphabet distribution show the distribution of users’ “actions” in the database.
 
 
 ```python
@@ -648,7 +649,7 @@ plotter.plot_alphabet_distribution(df["dna"])
 
 
 
-    <digitaldna.sequence_plots.SequencePlots at 0x1a1c247a20>
+    <digitaldna.sequence_plots.SequencePlots at 0x1a358c0358>
 
 
 
@@ -661,7 +662,7 @@ Thanks to the `digitaldna` we can make a bot detection thanks to the sequence be
 
 
 ```python
-est = LongestCommonSubsequence()
+est = LongestCommonSubsequence(in_path='', out_path='/tmp/glcr_cache', overwrite=False, threshold='auto', window=10, verbosity=2)
 y = est.fit_predict(df["dna"])
 df["bot"] = y
 ```
@@ -792,7 +793,8 @@ df[:10]
 
 
 
-and plot the linear and logarithmic LCS with its threshold that separates bots from human
+### LCS linear plot
+Plots the longest common subsequence curve as (number of accounts, sequence length). Orange threshold can be assigned or computed over the smoothed curve of LCSs and highlights possible automated accounts on its left.
 
 
 ```python
@@ -810,6 +812,14 @@ est.plot_LCS()
 ![png](output_14_1.png)
 
 
+### LCS logarithmic plot
+Plots the longest common subsequence curve as log(number of accounts), log(sequence length).
+
+LCS lengths (y axes) and the number of accounts who share the same LCS length (x axes) are logarithmic transformed in order to easily visualise patterns:
+    - Plateaux in the curve highlight homogenous groups of highly similar accounts.
+    - Steep declining in the curve indicates that group of accounts are different.
+
+
 
 ```python
 est.plot_LCS_log()
@@ -823,11 +833,13 @@ est.plot_LCS_log()
 
 
 
-![png](output_15_1.png)
+![png](output_16_1.png)
 
 
 ## Entropy plot
 ### Intrasequence plot
+Intra-sequence entropy boxplot shows the distribution of Shannon entropy computed over each timeline.
+
 
 
 ```python
@@ -836,10 +848,13 @@ intra_seq = plotter.plot_intrasequence_entropy(df["dna"])
 ```
 
 
-![png](output_17_0.png)
+![png](output_18_0.png)
 
 
 ### Intersequence plot
+ - Inter-sequence entropy boxplot (left) shows the distribution of Shannon entropy in each timeline.
+ - Inter-sequence entropy plot (right) shows entropy calculated for each timeline’s position. The same action in the same position means low entropy value thus a interesting pattern.
+
 
 
 ```python
@@ -847,11 +862,11 @@ inter_seq = plotter.plot_intersequence_entropy(df["dna"])
 ```
 
 
-![png](output_19_0.png)
+![png](output_20_0.png)
 
 
 ### Plot Sequence Color
-How the datafram is distributed
+Color sequence allow to easily identify suspicious patterns: large blocks of the same colour highlight high likelihood that several accounts act synchronically. 
 
 
 ```python
@@ -859,13 +874,13 @@ plotter.plot_sequences_color(df["dna"])
 ```
 
 
-![png](output_21_0.png)
+![png](output_22_0.png)
 
 
 
 
 
-    <digitaldna.sequence_plots.SequencePlots at 0x1a1c363160>
+    <digitaldna.sequence_plots.SequencePlots at 0x1a22520128>
 
 
 
