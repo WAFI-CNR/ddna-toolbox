@@ -51,12 +51,12 @@ You can find other examples in this [page](examples/notebook/DigitalDNA_python_p
 ## Credits and Aknowledgement
 
 This library has been made possible thanks to the collaboration and contribution of:
-- SAGE Publishing
-- Bellomo Salvatore
-- Cresci Stefano
-- Martella Antonio
+- [SAGE Publishing](https://uk.sagepub.com/en-gb/eur/home)
+- [Bellomo Salvatore](https://www.iit.cnr.it/en/salvatore.bellomo)
+- [Cresci Stefano](https://www.iit.cnr.it/en/stefano.cresci)
+- [Martella Antonio](https://www.iit.cnr.it/en/antonio.martella)
 - [Spognardi Angelo](https://angelospognardi.site.uniroma1.it)
-- Tesconi Maurizio
+- [Tesconi Maurizio](https://www.iit.cnr.it/en/maurizio.tesconi)
 - ... and all the contributors of this opensource library
 
 ## Want to contribute?
