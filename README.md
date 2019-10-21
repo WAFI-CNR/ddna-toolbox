@@ -52,9 +52,12 @@ You can find other examples in this [page](examples/notebook/DigitalDNA_python_p
 
 This library has been made possible thanks to the collaboration and contribution of:
 - SAGE Publishing
-- Angelo Spognardi
-- Maurizio Tesconi
-- Stefano Cresci
+- SAGE Publishing
+- Bellomo Salvatore
+- Cresci Stefano
+- Martella Antonio
+- [Spognardi Angelo](https://angelospognardi.site.uniroma1.it)
+- Tesconi Maurizio
 - ... and all the contributors of this opensource library
 
 ## Want to contribute?
