@@ -54,6 +54,7 @@ This library has been made possible thanks to the collaboration and contribution
 - [SAGE Publishing](https://uk.sagepub.com/en-gb/eur/home)
 - [Bellomo Salvatore](https://www.iit.cnr.it/en/salvatore.bellomo)
 - [Cresci Stefano](https://www.iit.cnr.it/en/stefano.cresci)
+- [Gagliano Giuseppe](https://github.com/giuseppegagliano)
 - [Martella Antonio](https://www.iit.cnr.it/en/antonio.martella)
 - [Spognardi Angelo](https://angelospognardi.site.uniroma1.it)
 - [Tesconi Maurizio](https://www.iit.cnr.it/en/maurizio.tesconi)
