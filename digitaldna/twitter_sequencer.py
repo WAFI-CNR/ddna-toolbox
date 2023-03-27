@@ -34,18 +34,18 @@ class TwitterDDNASequencer():
 
         - 'b3_type',  where the correspondence  is
                 - 'A' for tweet
-                - 'C' for reply
-                - 'T' for retweet
+                - 'T' for reply
+                - 'C' for retweet
         - 'b3_content', where the correspondence  is
                 - 'N' tweet contains no entities (plain text)
                 - 'E' tweet contains entities of one type
                 - 'X' tweet contains entities of mixed types
         - 'b6_content', where the correspondence  is
                 - 'N' tweet contains no entities (plain text)
-                - 'U' tweet contains one or more URLs
-                - 'H' tweet contains one or more hashtags
-                - 'M' tweet contains one or more mentions
-                - 'D' tweet contains one or more medias
+                - 'A' tweet contains one or more URLs
+                - 'T' tweet contains one or more hashtags
+                - 'C' tweet contains one or more mentions
+                - 'G' tweet contains one or more medias
                 - 'X' tweet contains entities of mixed types
 
     Attributes
